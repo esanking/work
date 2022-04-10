@@ -1,0 +1,28 @@
+{
+  "name": "my-feature",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite --port 8085",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview --port 8080"
+  },
+  "dependencies": {
+    "axios": "^0.25.0",
+    "bootstrap": "^5.1.3",
+    "core-js": "^3.20.3",
+    "node-sass": "^7.0.1",
+    "popper.js": "^1.16.1",
+    "sass": "^1.49.0",
+    "sass-loader": "^12.4.0",
+    "vue": "^3.2.25",
+    "vue-axios": "^3.4.0",
+    "vue-i18n": "^8.27.0",
+    "vue-router": "^4.0.12"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.0.0",
+    "typescript": "^4.4.4",
+    "vite": "^2.7.2",
+    "vue-tsc": "^0.29.8"
+  }
+}
