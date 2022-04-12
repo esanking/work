@@ -21,7 +21,8 @@
             </li>
             <li class="m-2 d-flex align-items-center justify-content-center">
               <label for="" class="text-primary w-25">殖利率</label>
-              <input type="number" v-model="formdata.rest" aria-label="%" placeholder="%" class="rest w-50" />
+              <input type="number" @keyup.enter="submit" v-model="formdata.rest" aria-label="%" placeholder="%"
+                class="rest w-50" />
             </li>
             <li class="w-100 text-center mt-2">
               <div class="btn btn-primary submit" @click="submit">submit</div>

@@ -1,7 +1,7 @@
 <template>
   <div class="LoginBg">
     <div class="Login">
-      <form class="Form p-3 text-white gologin">
+      <form class="Form p-3 text-white gologin col-md-5 col-sm-8 col-12">
         <h3>登入系統</h3>
         <label for="account" class="form-label">帳號</label>
         <input type="text" class="form-control" v-model="account.number" @keyup.enter="Login" name="number"
@@ -20,7 +20,7 @@
           </button>
         </div>
       </form>
-      <form class="Form p-3 text-white gosign sign">
+      <form class="Form p-3 text-white gosign sign col-md-5 col-sm-8 col-12">
         <h3>註冊系統</h3>
         <label for="account" class="form-label">帳號</label>
         <input type="text" class="form-control" v-model="account.number" @keyup.enter="SignUp" name="number"
@@ -130,7 +130,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 450px;
+      /* width: 450px; */
       border-radius: 10px;
       background-color: #590c45;
       transition: all 1s;
