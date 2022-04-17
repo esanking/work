@@ -1,4 +1,4 @@
-import{k as f,l as _,o as u,f as y,g as t,m as l,v as r,q as p}from"./vendor.936b408a.js";import{_ as b}from"./index.d93d4dc2.js";const h={setup(){let n=f({coin:[],yearCoin:[],year:[],rest:[]}),o=_("");function c(){let e=0,i=0,a=0,s=0,m="";for(let d=1;d<=n.year;d+=1)i+=n.coin*12,e=Math.round((n.coin*12+a+n.yearCoin)*(n.rest/100)),a=Math.round(n.coin*12+a+e+n.yearCoin),s=Math.round(e/12),m+=`
+import{k as f,l as _,o as u,f as y,g as t,m as l,v as r,q as p}from"./vendor.936b408a.js";import{_ as b}from"./index.9193ccda.js";const h={setup(){let n=f({coin:[],yearCoin:[],year:[],rest:[]}),o=_("");function c(){let e=0,i=0,a=0,s=0,m="";for(let d=1;d<=n.year;d+=1)i+=n.coin*12,e=Math.round((n.coin*12+a+n.yearCoin)*(n.rest/100)),a=Math.round(n.coin*12+a+e+n.yearCoin),s=Math.round(e/12),m+=`
                 <tr>
                     <td>\u7B2C${d}\u5E74</td>
                     <td>${i.toLocaleString()}</td>
