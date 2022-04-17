@@ -4,7 +4,7 @@
       <form class="Form p-3 text-white gologin col-md-5 col-sm-8 col-12">
         <h3>登入系統</h3>
         <label for="account" class="form-label">帳號</label>
-        <input type="text" class="form-control" v-model="account.number" @keyup.enter="Login" name="number"
+        <input type="text" class="form-control" v-model="account.name" @keyup.enter="Login" name="name"
           placeholder="UserName" />
         <span class="text-success">請填寫帳號欄位</span>
         <label for="password" class="form-label">密碼</label>
@@ -23,7 +23,7 @@
       <form class="Form p-3 text-white gosign sign col-md-5 col-sm-8 col-12">
         <h3>註冊系統</h3>
         <label for="account" class="form-label">帳號</label>
-        <input type="text" class="form-control" v-model="account.number" @keyup.enter="SignUp" name="number"
+        <input type="text" class="form-control" v-model="account.name" @keyup.enter="SignUp" name="name"
           placeholder="UserName" />
         <span class="text-success">請填寫帳號欄位</span>
         <label for="password" class="form-label">密碼</label>
@@ -53,7 +53,7 @@
     setup() {
       const router = useRouter();
       const { proxy } = getCurrentInstance();
-      let account = reactive({ number: '', password: '' });
+      let account = reactive({ name: '', password: '' });
       let ChangeFrom = ref(true);
       let active = ref(false);
       let errText = ref('');
@@ -70,29 +70,54 @@
       }
       function Login() {
         if (active.value) return;
-        const api = 'https://obscure-cove-49403.herokuapp.com/Login';
-        // const api = 'http://localhost:3000/Login';
-        proxy.$axios.post(api, account).then((res) => {
-          if (!res.data.success) {
+        const regex = new RegExp(/^(?=.*\d)(?=.*[a-zA-Z]).{5,12}$/);
+        if (!regex.test(account.name) || !regex.test(account.password)) {
+          active.value = true;
+          errText.value = '帳號、密碼需為英文大小寫和數字組成 5~12 字';
+          return;
+        }
+        const api = 'https://obscure-cove-49403.herokuapp.com/Login/Login';
+        // const api = 'http://localhost:3000/Login/Login';
+        proxy.$axios.post(api, account)
+          .then((res) => {
+            if (!res.data.Status) {
+              active.value = true;
+              errText.value = res.data.Message;
+              return;
+            }
+            RouterClock();
+          })
+          .catch((req) => {
             active.value = true;
-            errText.value = res.data.meg;
-            return;
-          }
-          RouterClock();
-        });
+            errText.value = req.response.data.Message;
+            account.password = '';
+          });
       }
       function RouterClock() {
-        router.push(`/ClockIn/${account.number}`);
+        router.push(`/ClockIn/${account.name}`);
       }
       function SignUp() {
         if (active.value) return;
-        const api = 'https://obscure-cove-49403.herokuapp.com/SignUp';
-        // const api = 'http://localhost:3000/SignUp';
-        proxy.axios.post(api, account).then((res) => {
+        const regex = new RegExp(/^(?=.*\d)(?=.*[a-zA-Z]).{5,12}$/);
+        if (!regex.test(account.name) || !regex.test(account.password)) {
           active.value = true;
-          errText.value = res.data.meg;
-          account.password = '';
-        });
+          errText.value = '帳號、密碼需為英文大小寫和數字組成 5~12 字';
+          return;
+        }
+        const api = 'https://obscure-cove-49403.herokuapp.com/Login/SignUp';
+        // const api = 'http://localhost:3000/SignUp';
+        // const api = 'http://localhost:3000/Login/SignUp';
+        proxy.axios.post(api, account)
+          .then((res) => {
+            active.value = true;
+            errText.value = res.data.Message;
+            account.password = '';
+          })
+          .catch((req) => {
+            active.value = true;
+            errText.value = req.response.data.Message;
+            account.password = '';
+          });
       }
 
       return {

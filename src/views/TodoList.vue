@@ -15,8 +15,8 @@
         <li v-for="(item, key) in todo" :key="key" class="mt-1">
           <div class="d-flex justify-content-between align-items-center
             border border-info border-top-0 px-2">
-            <span>{{ key + 1 }}. {{ item.AddText }}</span>
-            <i class="fas fa-times DelIcon text-danger" @click="RemoteTodo(item.id)"></i>
+            <span>{{ key + 1 }}. {{ item.TodoText }}</span>
+            <i class="fas fa-times DelIcon text-danger" @click="RemoteTodo(item.Id)"></i>
           </div>
         </li>
       </ul>
@@ -42,8 +42,10 @@
       })
 
       function AddTodo() {
-        const api = 'https://obscure-cove-49403.herokuapp.com/add';
+        // const api = 'https://obscure-cove-49403.herokuapp.com/add';
+        const api = 'https://obscure-cove-49403.herokuapp.com/TodoList/addTodo';
         // const api = 'http://localhost:3000/add';
+        // const api = 'http://localhost:3000/TodoList/addTodo';
         if (active.value) return;
         if (AddText.value.trim().length !== 0) {
           proxy.$http.post(api, { AddText: AddText.value }).then(() => {
@@ -58,16 +60,20 @@
       }
 
       function FindAllTodo() {
-        const api = 'https://obscure-cove-49403.herokuapp.com/data';
+        // const api = 'https://obscure-cove-49403.herokuapp.com/data';
+        const api = 'https://obscure-cove-49403.herokuapp.com/TodoList/Todos';
         // const api = 'http://localhost:3000/data';
+        // const api = 'http://localhost:3000/TodoList/Todos';
         proxy.$http.get(api).then((response) => {
           todo.value = response.data;
         });
       }
 
       function RemoteTodo(id) {
-        const api = `https://obscure-cove-49403.herokuapp.com/data/${id}`;
+        // const api = `https://obscure-cove-49403.herokuapp.com/data/${id}`;
+        const api = `https://obscure-cove-49403.herokuapp.com/TodoList/Todos/${id}`;
         // const api = `http://localhost:3000/data/${id}`;
+        // const api = `http://localhost:3000/TodoList/Todos/${id}`;
         proxy.$http.delete(api).then(() => {
           FindAllTodo();
         });
