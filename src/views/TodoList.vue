@@ -1,20 +1,20 @@
 <template>
   <div class="TodoList MtMargin">
     <div class="w-100 d-flex align-items-center flex-column p-5 ">
-      <h3 class="text-primary">Add Todo</h3>
+      <h3 class="text-success">Add Todo</h3>
       <div class="d-flex align-items-center">
         <input type="text" @keyup.enter.stop="AddTodo" class="AddInp" v-model="AddText" />
-        <button type="button" class="btn-sm btn-outline-primary AddBtn" @click.stop="AddTodo">
+        <button type="button" class="btn-sm btn-success AddBtn" @click.stop="AddTodo">
           Add
         </button>
       </div>
     </div>
     <div class="w-100 d-flex align-items-center flex-column py-2">
-      <h3 class="text-primary">My TodoList</h3>
-      <ul class="w-75">
+      <h3 class="text-success">My TodoList</h3>
+      <ul class="w-75 text-success">
         <li v-for="(item, key) in todo" :key="key" class="mt-1">
           <div class="d-flex justify-content-between align-items-center
-            border border-info border-top-0 px-2">
+            border border-success border-top-0 px-2">
             <span>{{ key + 1 }}. {{ item.TodoText }}</span>
             <i class="fas fa-times DelIcon text-danger" @click="RemoteTodo(item.Id)"></i>
           </div>

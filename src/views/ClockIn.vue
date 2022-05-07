@@ -29,88 +29,101 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, key) in data" :key="key">
-              <td>{{ item.UserName }}</td>
-              <td>{{ item.GoWorkTime }}</td>
-              <td>{{ item.OffWorkTime }}</td>
+            <tr v-for="(item, key) in data.InTimeList" :key="key">
+              <td>{{ UserName }}</td>
+              <td>{{ data.InTimeList[key] }}</td>
+              <td>{{ data.OutTimeList[key] }}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+  <Message v-show="active" :errText="errText" @active="active=!active"></Message>
 </template>
 <script>
-  import { ref, reactive, onMounted } from 'vue';
+  import { ref, reactive, onMounted, getCurrentInstance } from 'vue';
   import { useRoute } from "vue-router";
-  // import { inject } from 'vue'
-  export default {
+  import { defineComponent } from "vue";
+  import Message from '../components/Message.vue';
+
+  export default defineComponent({
+    components: { Message },
     setup() {
       const router = useRoute();
       let UserName = ref('');
       let Time = ref('');
-      let Record = reactive([]);
-      let data = ref([]);
+      const { proxy } = getCurrentInstance();
+      let data = ref({
+        InTimeList: ref([]),
+        OutTimeList: [],
+        name: UserName,
+        id: 0
+      });
       let WorkCheck = ref(false);
+      let active = ref(false);
+      let errText = ref('');
       onMounted(() => {
         UserName.value = router.params.UserName;
-        GetData();
-        GetUser();
+        GetRecord();
       })
-      function GoToWork() {
+      async function GoToWork() {
+        if(active.value) return;
         GetDate();
-        data.value.push({
-          UserName: UserName.value,
-          GoWorkTime: Time.value,
-          OffWorkTime: '',
+        data.value.InTimeList.push(Time.value)
+        const api = 'https://obscure-cove-49403.herokuapp.com/CheckIn/CheckIn';
+        // const api = 'http://localhost:3000/CheckIn/CheckIn';
+        await proxy.$http.post(api, data.value).then((res) => {
+          active.value = true;
+          console.log(res.data.Message,'res.data.Message')
+          errText.value = res.data.Message;
         });
-        const PushRecord = JSON.stringify(data.value);
-        localStorage.setItem('Record', PushRecord);
-        GetUser();
+        GetRecord();
       }
-      function GoOffWork() {
+      async function GoOffWork() {
+        if(active.value) return;
         GetDate();
-        data.value.forEach((item, index) => {
-          if (item.OffWorkTime === '') {
-            data.value[index].OffWorkTime = Time.value;
-            const PushRecord = JSON.stringify(data.value);
-            localStorage.setItem('Record', PushRecord);
-            data.value[index].OffWorkTime = Time.value;
-          }
+        data.value.OutTimeList.push(Time.value)
+        const api = 'https://obscure-cove-49403.herokuapp.com/CheckIn/CheckIn';
+        // const api = 'http://localhost:3000/CheckIn/CheckIn';
+        await proxy.$http.post(api, data.value).then((res) => {
+          active.value = true;
+          errText.value = res.data.Message;
+        });
+        GetRecord();
+      }
+      async function GetRecord() {
+        const api = 'https://obscure-cove-49403.herokuapp.com/CheckIn/GetCheckInRecord';
+        // const api = 'http://localhost:3000/CheckIn/GetCheckInRecord';
+        await proxy.$http.get(api,{params:{name:UserName.value}}).then((response) => {
+          if(response.data)
+            data.value = response.data;
         });
         GetUser();
-      }
-      function GetData() {
-        data.value = JSON.parse(localStorage.getItem('Record')) || [];
-        fliterData();
-      }
-      function fliterData() {
-        data.value = data.value.filter((item) => item.UserName === UserName.value);
       }
       function GetDate() {
         Time.value = new Date().toLocaleString();
       }
       function GetUser() {
-        if (data.value.length === 0) {
-          WorkCheck.value = false;
-        } else if (data.value[data.value.length - 1].OffWorkTime === '') {
+        if (!data.value.OutTimeList[data.value.InTimeList.length - 1] && data.value.InTimeList.length !== 0) {
           WorkCheck.value = true;
         } else {
           WorkCheck.value = false;
         }
       }
       return {
-        UserName,
-        Time,
-        Record,
         data,
+        UserName,
         WorkCheck,
         GoToWork,
-        GoOffWork
+        GoOffWork,
+        GetDate,
+        active,
+        errText
       }
     }
 
-  };
+  });
 </script>
 <style lang="scss">
   .ClockInImg {

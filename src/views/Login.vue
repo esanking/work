@@ -12,10 +12,10 @@
           placeholder="PassWord" />
         <span class="text-success">請填寫密碼欄位</span>
         <div class="d-flex justify-content-around w-100">
-          <button type="button" class="btn btn-outline-danger text-white" @click="ClickChangeFrom">
+          <button type="button" class="btn btn-danger text-white" @click="ClickChangeFrom">
             去註冊
           </button>
-          <button type="button" class="btn btn-outline-primary text-white" @click="Login">
+          <button type="button" class="btn btn-success" @click="Login">
             登入
           </button>
         </div>
@@ -31,10 +31,10 @@
           placeholder="PassWord" />
         <span class="text-success">請填寫密碼欄位</span>
         <div class="d-flex justify-content-around w-100">
-          <button type="button" class="btn btn-outline-danger text-white" @click="ClickChangeFrom">
+          <button type="button" class="btn btn-danger text-white" @click="ClickChangeFrom">
             去登入
           </button>
-          <button type="button" class="btn btn-outline-primary text-white" @click="SignUp">
+          <button type="button" class="btn btn-success" @click="SignUp">
             註冊
           </button>
         </div>
@@ -137,7 +137,7 @@
 <style lang="scss">
   .LoginBg {
     height: 100vh;
-    background: #5bb6b2;
+    // background: #5bb6b2;
     display: flex;
     align-items: center;
     justify-content: center;

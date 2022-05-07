@@ -10,7 +10,7 @@
         >
       </div>
     </nav>
-    <div class="Container bg-success">
+    <div class="Container bg-primary">
       <router-view></router-view>
     </div>
     <footer class="w-100 py-5 bg-dark footer">

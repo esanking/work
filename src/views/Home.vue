@@ -9,13 +9,14 @@
       </div>
     </div>
     <div id="PersonalProfile" class="PersonalProfile py-3">
-      <h3 class="title text-primary">Personal Profile</h3>
-      <p class="Border"></p>
+      <h3 class="title text-success border border-success border-top-0 border-start-0 border-end-0 border-2">Personal
+        Profile
+      </h3>
       <div class="Profile">
         <div class="FilePhotoCss">
           <div class="FilePhoto"></div>
         </div>
-        <div class="ProfileText">
+        <div class="ProfileText text-white">
           <h3>黃文毅 ( WEN - YI - HUANG )</h3>
           <p>
             大家好，我叫黃文毅，
@@ -29,8 +30,8 @@
     </div>
     <div class="Works pb-4 container">
       <div class="WorksTitle">
-        <h3 class="title text-primary">My works</h3>
-        <div class="Border"></div>
+        <h3 class="title text-success border border-success border-top-0 border-start-0 border-end-0 border-2">My works
+        </h3>
       </div>
       <ul class="my-2 row WorkList">
         <router-link v-for="(item, key) in works" :key="key" :to="{ path: item.link }"
@@ -172,11 +173,6 @@
     flex-direction: column;
     align-items: center;
     margin-top: 10px;
-
-    .Border {
-      width: 10%;
-      border-bottom: 1px solid rgb(167, 46, 46);
-    }
   }
 
   ul {
